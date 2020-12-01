@@ -1,35 +1,47 @@
 interface PushOptions {
-  query?: Record<string, any> /**携带参数 */;
-  needHeader?: 0 | 1 /**是否需要原生实现导航栏（默认：0） */;
-  appBack?: 0 | 1 /**是否需要原生返回（默认：1） */;
+  // 携带参数
+  query?: Record<string, any>;
+  // 是否需要原生实现导航栏（默认：0）
+  needHeader?: 0 | 1;
+  // 是否需要原生返回（默认：1）
+  appBack?: 0 | 1;
 }
 
-class _Schemes {
+class HSchemes {
   private __SCHEME: string = '';
   private __BASE: string = '';
   // 构造单例
-  private static instance: _Schemes;
+  private static instance: HSchemes;
   private constructor() {}
-  static defaultSchemes() {
+
+  /**
+   * 获取Scheme单例实例对象
+   * @returns 返回实例对象
+   */
+  public static defaultSchemes() {
     if (!this.instance) {
-      this.instance = new _Schemes();
+      this.instance = new HSchemes();
     }
     return this.instance;
   }
+
   /**
-   * 配置scheme地址
-   * 只需要配置前缀，如：ddou://www.d-dou.com
-   * @param scheme
+   * 全局配置项，你应该在项目初始化时调用config进行配置。
+   *
+   * @param scheme scheme地址，只需要配置前缀，如：ddou://www.d-dou.com
+   * @param base 二级目录地址
    */
   public config(scheme: string, base: string = '') {
     if (base && !/^\//.test(base)) {
-      throw 'SCHEMES: 配置错误, base 必须以斜杆(/)开头.';
+      base = `/${base}`;
     }
     this.__SCHEME = scheme;
     this.__BASE = base;
   }
+
   /**
    * 跳转H5页面
+   *
    * @param path H5路由
    * @param options  可选项
    */
@@ -46,13 +58,13 @@ class _Schemes {
       url = `${window.location.origin}${this.__BASE}${path}?needHeader=${needHeader}&appBack=${appBack}`;
       // 判断是否存在query参数，如果存在，则做拼接处理
       if (query) {
-        for (let key in query) {
+        Object.keys(query).forEach((key) => {
           url += `&${key}=${query[key]}`;
-        }
+        });
       }
     }
     // 处理scheme地址
-    let schemeHref = `${SCHEME_PUSH}?url=${encodeURIComponent(url)}`;
+    const schemeHref = `${SCHEME_PUSH}?url=${encodeURIComponent(url)}`;
     // 执行跳转
     window.location.href = schemeHref;
   }
@@ -68,6 +80,7 @@ class _Schemes {
 
   /**
    * 跳转原生页面
+   *
    * @param path
    */
   public jump(path: string, params?: Record<string, any>) {
@@ -77,16 +90,16 @@ class _Schemes {
     // 判断原生页面是否需要参数
     if (params) {
       schemeHref += '?';
-      for (let key in params) {
+      Object.keys(params).forEach((key) => {
         schemeHref += `${key}=${params[key]}&`;
-      }
+      });
       schemeHref = schemeHref.slice(0, -1);
     }
     window.location.href = schemeHref;
   }
   /**
    * 原生打开外部浏览器
-   * @param {string} url 资源地址
+   * @param url 资源地址
    */
   public openBrowser(url: string) {
     const SCHEME_BROWSER = `${this.__SCHEME}/browser`;
@@ -94,5 +107,5 @@ class _Schemes {
   }
 }
 
-const Schemes = _Schemes.defaultSchemes();
+const Schemes = HSchemes.defaultSchemes();
 export default Schemes;
