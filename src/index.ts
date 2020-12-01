@@ -45,10 +45,13 @@ class HSchemes {
    * @param path H5路由
    * @param options  可选项
    */
-  public push(path: string, options: PushOptions) {
+  public push(path: string, options: PushOptions = {
+    needHeader: 0,
+    appBack: 1
+  }) {
     const SCHEME_PUSH = `${this.__SCHEME}/push`;
     // 解构参数
-    const { query, needHeader = 0, appBack = 1 } = options;
+    const { query, needHeader, appBack } = options;
     // 处理url
     let url: string;
     // 如果连接以http开头，则直接赋值
