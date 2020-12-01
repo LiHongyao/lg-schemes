@@ -1,10 +1,12 @@
 {
   "name": "lg-schemes",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "H5和原生跳转交互/scheme跳转协议封装/",
   "main": "lib/index.js",
   "types": "lib/index.d.ts",
-  "files": ["lib/**/*"],
+  "files": [
+    "lib/**/*"
+  ],
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "build": "tsc",
