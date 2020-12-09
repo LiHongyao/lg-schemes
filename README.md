@@ -3,14 +3,14 @@ scheme跳转协议为H5和原生之间的跳转协议，命名规范如下：
 ```
 protocol://host
 ```
-如，D豆定义的scheme协议为：`ddou://www.d-dou.com`，具体可参照此形式设计。
+如，D豆项目定义的scheme协议为：`ddou://www.d-dou.com`，具体可参照此形式设计。
 
-目前根据实际开发的场景定义如下跳转形式（示例以D豆为例）：
+目前根据实际开发的场景定义如下跳转形式（示例以D豆为例），如果需要使用该库，原生需严格按照如下约定处理scheme跳转。
 
 **a. 原生跳转H5页面：**
 
 ```
- ddou://www.d-dou.com/push?url=encodeURIComponent(url=xxx?needHeader=?&appBack=?)
+ddou://www.d-dou.com/push?url=encodeURIComponent(url=xxx?needHeader=?&appBack=?)
 ```
 
 示例解读：
@@ -37,14 +37,22 @@ ddou://www.d-dou.com/switch?index=x
 **d. 原生打开外部浏览器：**
 
 ```
-ddou://www.d-dou.com/browser?url=xxx
+ddou://www.d-dou.com/browser?url=encodeURIComponent(xxx)
 ```
 
 > 说明：`url` 为外部H5链接地址。
 
+
+# 安装
+```shell
+$ npm install lg-schemes
+# OR
+$ yarn add lg-schemes
+```
+
 # 使用
 
-为了便于开发使用，这里封装lg-schemes库。使用事前，你需要全局配置scheme
+为了便于开发使用，这里封装lg-schemes库。使用之前，你需要全局配置scheme
 ```
 import Schemes from 'lg-schemes';
 Schemes.config('scheme地址', '二级目录地址');
@@ -55,6 +63,12 @@ Schemes.config('scheme地址', '二级目录地址');
 具体API如下；
 
 ```typescript
+interface PushOptions {
+    query?: Record<string, any>;
+    needHeader?: 0 | 1;
+    appBack?: 0 | 1;
+}
+
 /**
  * 全局配置项，你应该在项目初始化时调用config进行配置。
  * 
