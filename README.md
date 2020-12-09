@@ -10,7 +10,7 @@ protocol://host
 **a. 原生跳转H5页面：**
 
 ```
-ddou://www.d-dou.com/push?url=encodeURIComponent(url=xxx?needHeader=?&appBack=?)
+ ddou://www.d-dou.com/push?url=encodeURIComponent(url=xxx?needHeader=?&appBack=?)
 ```
 
 示例解读：
@@ -37,7 +37,7 @@ ddou://www.d-dou.com/switch?index=x
 **d. 原生打开外部浏览器：**
 
 ```
-ddou://www.d-dou.com/browser?url=encodeURIComponent(xxx)
+ddou://www.d-dou.com/browser?url=xxx
 ```
 
 > 说明：`url` 为外部H5链接地址。
@@ -63,12 +63,6 @@ Schemes.config('scheme地址', '二级目录地址');
 具体API如下；
 
 ```typescript
-interface PushOptions {
-    query?: Record<string, any>;
-    needHeader?: 0 | 1;
-    appBack?: 0 | 1;
-}
-
 /**
  * 全局配置项，你应该在项目初始化时调用config进行配置。
  * 
