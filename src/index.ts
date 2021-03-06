@@ -47,14 +47,11 @@ class HSchemes {
    */
   public push(
     path: string,
-    options: PushOptions = {
-      needHeader: 0,
-      appBack: 1,
-    },
+    options: PushOptions
   ) {
     const SCHEME_PUSH = `${this.__SCHEME}/push`;
     // 解构参数
-    const { query, needHeader, appBack } = options;
+    const { query, needHeader = 0, appBack = 1 } = options;
     // 处理url
     let url: string;
     // 如果连接以http开头，则直接赋值
