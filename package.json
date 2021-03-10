@@ -1,6 +1,6 @@
 {
   "name": "lg-schemes",
-  "version": "1.0.8",
+  "version": "1.0.9",
   "description": "H5和原生跳转交互/scheme跳转协议封装/",
   "main": "lib/index.js",
   "types": "lib/index.d.ts",
